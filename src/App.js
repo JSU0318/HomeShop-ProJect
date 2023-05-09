@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { createContext, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import data from "./data.js";
+import Cart from "./routes/Cart.js";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import Detail from "./routes/Detail";
+import axios from "axios";
+
+export let Context1 = createContext();
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
+  let [list] = useState([10, 11, 12]);
   let navigate = useNavigate();
   return (
     <div className="App">
@@ -30,6 +35,13 @@ function App() {
             >
               Detail
             </Nav.Link>
+            <Nav.Link
+              onClick={() => {
+                navigate("/cart");
+              }}
+            >
+              Cart
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -47,10 +59,31 @@ function App() {
                   })}
                 </div>
               </div>
+              <button
+                onClick={() => {
+                  axios.get("https://codingapple1.github.io/shop/data2.json").then((data) => {
+                    console.log(data.data);
+                    console.log(shoes);
+                    let copy = [...shoes, ...data.data];
+                    setShoes(copy);
+                  });
+                  // axios.post('safdfas', { name: 'kim'})
+                }}
+              >
+                더 보기
+              </button>
             </>
           }
         />
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route
+          path="/detail/:id"
+          element={
+            <Context1.Provider value={(list, shoes)}>
+              <Detail shoes={shoes} />
+            </Context1.Provider>
+          }
+        />
+        <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<div>404 ForBidden</div>} />
 
         <Route path="/about" element={<About />}>

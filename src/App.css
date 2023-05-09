@@ -9,6 +9,15 @@
   flex-direction: column;
 }
 
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
 .App {
   text-align: center;
   letter-spacing: -0.8px;
