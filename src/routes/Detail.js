@@ -42,6 +42,13 @@ function Detail(props) {
     return x.id == id;
   });
 
+  useEffect(() => {
+    let put = localStorage.getItem("watched");
+    put = JSON.parse(put);
+    put.push(findItem.id);
+    localStorage.setItem("watched", JSON.stringify(put));
+  }, []);
+
   return (
     <div className="container">
       {/* {count} */}
