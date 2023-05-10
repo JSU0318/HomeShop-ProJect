@@ -14,6 +14,19 @@ function App() {
   let [shoes, setShoes] = useState(data);
   let [list] = useState([10, 11, 12]);
   let navigate = useNavigate();
+
+  let obj = { name: "kim" };
+  localStorage.setItem("data", JSON.stringify(obj));
+  let checkout = localStorage.getItem("data");
+  JSON.parse(checkout);
+  console.log(checkout);
+
+  //   useEffect(()=>{
+  //     localStorage.setItem('watched', JSON.stringify( [] ))
+  //   },[])
+
+  // }
+
   return (
     <div className="App">
       <Navbar bg="dark" variant="dark">

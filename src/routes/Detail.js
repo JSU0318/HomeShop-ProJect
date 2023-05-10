@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Context1 } from "./../App.js";
+import { useDispatch } from "react-redux";
+import { addItem } from "../store.js";
 
 // const YellowBtn = styled.button`
 //   background: yellow;
@@ -32,9 +34,9 @@ function Detail(props) {
   let [count, setCount] = useState(0);
   let [alert, setAlert] = useState(true);
   let [tap, setTap] = useState(0);
-
+  let dispatch = useDispatch();
   let { list, shoes } = useContext(Context1);
-
+  let navigate = useNavigate();
   let { id } = useParams();
   let findItem = props.shoes.find(function (x) {
     return x.id == id;
@@ -67,7 +69,21 @@ function Detail(props) {
           <h4 className="pt-5">{findItem.title}</h4>
           <p>{findItem.content}</p>
           <p>{findItem.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              dispatch(
+                addItem({
+                  id: 1,
+                  name: "Red Knit",
+                  count: 1,
+                })
+              );
+              navigate("/cart");
+            }}
+          >
+            주문하기
+          </button>
         </div>
       </div>
       <br></br>
