@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addCount, changeName, increase } from "../store.js";
@@ -7,7 +6,6 @@ function Cart() {
   let state = useSelector((state) => state);
   let dispatch = useDispatch();
 
-  console.log(state.cart[0].name);
   return (
     <div>
       <h6>
